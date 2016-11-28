@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LoadingLayoutDemo.iml" filepath="$PROJECT_DIR$/LoadingLayoutDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loadinglib/loadinglib.iml" filepath="$PROJECT_DIR$/loadinglib/loadinglib.iml" />
+    </modules>
+  </component>
+</project>
