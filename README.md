@@ -3,7 +3,7 @@
 项目里都会遇到几种页面，分别为加载中、无网络、无数据、出错四种情况，经常要使用，所以封成库引用了，方便使用，顺便分享出来。先看一下效果：
 
 ![](https://dn-mhke0kuv.qbox.me/341fb9f9a8edfbe56649.gif)
-原理比较简单，继承FrameLayout，在xml渲染完成后，加上加载中、无网络、无数据、出错四个页面，根据需要控制显示哪一层，花了些时间，开了很多方法出来，支持很多属性的设置，算是比较实用，源码里已对各个方法的作用都加了注释，就不做过多解释了，项目GitHub地址：[https://github.com/weavey/LoadingLayoutDemo](https://github.com/weavey/LoadingLayoutDemo)，感兴趣的可以看看，欢迎指出问题。
+原理比较简单，继承FrameLayout，在xml渲染完成后，加上加载中、无网络、无数据、出错四个页面，根据需要控制显示哪一层，花了些时间，开了很多方法出来，支持很多属性的设置，算是比较实用，源码里已对各个方法的作用都加了注释，就不做过多解释了。
 ### 使用方式
 gradle引用：
 >compile 'com.lai.weavey:loadinglayout:1.2'
