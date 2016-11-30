@@ -3,6 +3,7 @@
 项目里都会遇到几种页面，分别为加载中、无网络、无数据、出错四种情况，经常要使用，所以封成库引用了，方便使用，顺便分享出来。先看一下效果：
 
 ![](https://dn-mhke0kuv.qbox.me/341fb9f9a8edfbe56649.gif)
+
 原理比较简单，继承FrameLayout，在xml渲染完成后，加上加载中、无网络、无数据、出错四个页面，根据需要控制显示哪一层，花了些时间，开了很多方法出来，支持很多属性的设置，算是比较实用，源码里已对各个方法的作用都加了注释，就不做过多解释了。
 ### 使用方式
 gradle引用：
@@ -105,5 +106,7 @@ loadingLayout.setOnReloadListener(new LoadingLayout.OnReloadListener() {
 >注意：
 （1）isFirstVisible属性用来控制contentView一开始是否隐藏，由于LoadingLayout原理是在xml渲染完成后在contentView上铺上三层View，因此，一开始如果不隐藏，等contentView渲染完成后调用: ```loadingLayout.setStatus(LoadingLayout.Loading);```
 会造成界面闪烁的效果，影响体验，因此默认将contentView隐藏，所以数据加载完成后一定要调用```loadingLayout.setStatus(LoadingLayout.Success);```，将contentView显示出来。这样也能解决未获取到数据的情况下，被用户看到杂乱无章的布局，个人还是比较喜欢默认隐藏contentView；
+
 （2）为了方便管理，LoadingLayout只能有一个直属子View，类似ScrollView，添加两个直属子View会抛出异常``` throw new IllegalStateException("LoadingLayout can host only one direct child");```；
+
 （3）由于AS会直接将自定义View的特性反应在预览界面，所以在使用LoadingLayout的时候，会无法看到被LoadingLayout包裹住的布局（默认为gone），因此也可以将isFirstVisible属性暂时设为true，预览布局。
