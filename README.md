@@ -104,6 +104,7 @@ loadingLayout.setOnReloadListener(new LoadingLayout.OnReloadListener() {
 </com.weavey.loading.lib.LoadingLayout>
 ```
 >注意：
+
 （1）isFirstVisible属性用来控制contentView一开始是否隐藏，由于LoadingLayout原理是在xml渲染完成后在contentView上铺上三层View，因此，一开始如果不隐藏，等contentView渲染完成后调用: ```loadingLayout.setStatus(LoadingLayout.Loading);```
 会造成界面闪烁的效果，影响体验，因此默认将contentView隐藏，所以数据加载完成后一定要调用```loadingLayout.setStatus(LoadingLayout.Success);```，将contentView显示出来。这样也能解决未获取到数据的情况下，被用户看到杂乱无章的布局，个人还是比较喜欢默认隐藏contentView；
 
