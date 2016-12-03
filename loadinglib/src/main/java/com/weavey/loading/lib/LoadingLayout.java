@@ -69,6 +69,7 @@ public class LoadingLayout extends FrameLayout {
     private static int buttonWidth = -1;
     private static int buttonHeight = -1;
     private static int loadingLayoutId = R.layout.widget_loading_page;
+    private static int backgroundColor = R.color.base_loading_background;
 
     public LoadingLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -107,6 +108,12 @@ public class LoadingLayout extends FrameLayout {
         errorPage = LayoutInflater.from(mContext).inflate(R.layout.widget_error_page, null);
         emptyPage = LayoutInflater.from(mContext).inflate(R.layout.widget_empty_page, null);
         networkPage = LayoutInflater.from(mContext).inflate(R.layout.widget_nonetwork_page, null);
+        defineLoadingPage = null;
+
+        loadingPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
+        errorPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
+        emptyPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
+        networkPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
 
         errorText = Utils.findViewById(errorPage, R.id.error_text);
         emptyText = Utils.findViewById(emptyPage, R.id.empty_text);
@@ -192,28 +199,41 @@ public class LoadingLayout extends FrameLayout {
             case Success:
 
                 contentView.setVisibility(View.VISIBLE);
-                loadingPage.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
+                if (defineLoadingPage != null) {
+
+                    defineLoadingPage.setVisibility(View.GONE);
+                } else {
+                    loadingPage.setVisibility(View.GONE);
+                }
                 break;
 
             case Loading:
 
                 contentView.setVisibility(View.GONE);
-                loadingPage.setVisibility(View.VISIBLE);
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
+                if (defineLoadingPage != null) {
+                    defineLoadingPage.setVisibility(View.VISIBLE);
+                } else {
+                    loadingPage.setVisibility(View.VISIBLE);
+                }
                 break;
 
             case Empty:
 
                 contentView.setVisibility(View.GONE);
-                loadingPage.setVisibility(View.GONE);
                 emptyPage.setVisibility(View.VISIBLE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.GONE);
+                if (defineLoadingPage != null) {
+                    defineLoadingPage.setVisibility(View.GONE);
+                } else {
+                    loadingPage.setVisibility(View.GONE);
+                }
                 break;
 
             case Error:
@@ -223,6 +243,11 @@ public class LoadingLayout extends FrameLayout {
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.VISIBLE);
                 networkPage.setVisibility(View.GONE);
+                if (defineLoadingPage != null) {
+                    defineLoadingPage.setVisibility(View.GONE);
+                } else {
+                    loadingPage.setVisibility(View.GONE);
+                }
                 break;
 
             case No_Network:
@@ -232,6 +257,12 @@ public class LoadingLayout extends FrameLayout {
                 emptyPage.setVisibility(View.GONE);
                 errorPage.setVisibility(View.GONE);
                 networkPage.setVisibility(View.VISIBLE);
+                if (defineLoadingPage != null) {
+
+                    defineLoadingPage.setVisibility(View.GONE);
+                } else {
+                    loadingPage.setVisibility(View.GONE);
+                }
                 break;
 
             default:
@@ -482,6 +513,7 @@ public class LoadingLayout extends FrameLayout {
 
         defineLoadingPage = view;
         this.removeView(loadingPage);
+        defineLoadingPage.setVisibility(View.GONE);
         this.addView(view);
         return this;
     }
@@ -497,6 +529,7 @@ public class LoadingLayout extends FrameLayout {
         this.removeView(loadingPage);
         View view = LayoutInflater.from(mContext).inflate(id, null);
         defineLoadingPage = view;
+        defineLoadingPage.setVisibility(View.GONE);
         this.addView(view);
         return this;
     }
@@ -583,7 +616,6 @@ public class LoadingLayout extends FrameLayout {
             return mConfig;
         }
 
-
         /**
          * 设置所有提示文本的字体颜色
          *
@@ -643,6 +675,12 @@ public class LoadingLayout extends FrameLayout {
 
             loadingLayoutId = id;
             return mConfig;
+        }
+
+        public Config setAllPageBackgroundColor(@ColorRes int color){
+
+            backgroundColor = color;
+            return  mConfig;
         }
     }
 }

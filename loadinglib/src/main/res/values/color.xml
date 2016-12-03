@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="base_text_color_light">#909090</color>
+    <color name="base_loading_background">#f7f7f7</color>
 </resources>
