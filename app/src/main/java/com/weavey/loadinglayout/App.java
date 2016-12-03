@@ -29,6 +29,7 @@ public class App extends Application {
                 .setReloadButtonTextSize(14)
                 .setReloadButtonTextColor(R.color.gray)
                 .setReloadButtonWidthAndHeight(150,40)
-                .setLoadingPageLayout(R.layout.define_loading_page);
+                .setAllPageBackgroundColor(R.color.background);
+//        .setLoadingPageLayout(R.layout.define_loading_page)
     }
 }
