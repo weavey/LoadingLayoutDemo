@@ -68,8 +68,5 @@ public class MainActivity extends AppCompatActivity {
                 loading.setStatus(LoadingLayout.Loading);
             }
         },10000);
-
-
-
     }
 }

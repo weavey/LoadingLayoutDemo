@@ -51,25 +51,7 @@ public class LoadingLayout extends FrameLayout {
     private View contentView;
     private OnReloadListener listener;
     private boolean isFirstVisible; //是否一开始显示contentview，默认不显示
-
-    //配置
-    private static Config mConfig = new Config();
-    private static String emptyStr = "暂无数据";
-    private static String errorStr = "加载失败，请稍后重试···";
-    private static String netwrokStr = "无网络连接，请检查网络···";
-    private static String reloadBtnStr = "点击重试";
-    private static int emptyImgId = R.mipmap.empty;
-    private static int errorImgId = R.mipmap.error;
-    private static int networkImgId = R.mipmap.no_network;
-    private static int reloadBtnId = R.drawable.selector_btn_back_gray;
-    private static int tipTextSize = 14;
-    private static int buttonTextSize = 14;
-    private static int tipTextColor = R.color.base_text_color_light;
-    private static int buttonTextColor = R.color.base_text_color_light;
-    private static int buttonWidth = -1;
-    private static int buttonHeight = -1;
-    private static int loadingLayoutId = R.layout.widget_loading_page;
-    private static int backgroundColor = R.color.base_loading_background;
+    private static Config mConfig = new Config();   //配置
 
     public LoadingLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -104,16 +86,20 @@ public class LoadingLayout extends FrameLayout {
 
     private void build() {
 
-        loadingPage = LayoutInflater.from(mContext).inflate(loadingLayoutId, null);
+        if(mConfig.loadingView==null){
+            loadingPage = LayoutInflater.from(mContext).inflate(mConfig.loadingLayoutId, null);
+        }else {
+            loadingPage = mConfig.loadingView;
+        }
         errorPage = LayoutInflater.from(mContext).inflate(R.layout.widget_error_page, null);
         emptyPage = LayoutInflater.from(mContext).inflate(R.layout.widget_empty_page, null);
         networkPage = LayoutInflater.from(mContext).inflate(R.layout.widget_nonetwork_page, null);
         defineLoadingPage = null;
 
-        loadingPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
-        errorPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
-        emptyPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
-        networkPage.setBackgroundColor(Utils.getColor(mContext,backgroundColor));
+        loadingPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
+        errorPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
+        emptyPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
+        networkPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
 
         errorText = Utils.findViewById(errorPage, R.id.error_text);
         emptyText = Utils.findViewById(emptyPage, R.id.empty_text);
@@ -145,44 +131,44 @@ public class LoadingLayout extends FrameLayout {
             }
         });
 
-        errorText.setText(errorStr);
-        emptyText.setText(emptyStr);
-        networkText.setText(netwrokStr);
+        errorText.setText(mConfig.errorStr);
+        emptyText.setText(mConfig.emptyStr);
+        networkText.setText(mConfig.netwrokStr);
 
-        errorText.setTextSize(tipTextSize);
-        emptyText.setTextSize(tipTextSize);
-        networkText.setTextSize(tipTextSize);
+        errorText.setTextSize(mConfig.tipTextSize);
+        emptyText.setTextSize(mConfig.tipTextSize);
+        networkText.setTextSize(mConfig.tipTextSize);
 
-        errorText.setTextColor(Utils.getColor(mContext, tipTextColor));
-        emptyText.setTextColor(Utils.getColor(mContext, tipTextColor));
-        networkText.setTextColor(Utils.getColor(mContext, tipTextColor));
+        errorText.setTextColor(Utils.getColor(mContext, mConfig.tipTextColor));
+        emptyText.setTextColor(Utils.getColor(mContext, mConfig.tipTextColor));
+        networkText.setTextColor(Utils.getColor(mContext, mConfig.tipTextColor));
 
-        errorImg.setImageResource(errorImgId);
-        emptyImg.setImageResource(emptyImgId);
-        networkImg.setImageResource(networkImgId);
+        errorImg.setImageResource(mConfig.errorImgId);
+        emptyImg.setImageResource(mConfig.emptyImgId);
+        networkImg.setImageResource(mConfig.networkImgId);
 
 
-        errorReloadBtn.setBackgroundResource(reloadBtnId);
-        networkReloadBtn.setBackgroundResource(reloadBtnId);
+        errorReloadBtn.setBackgroundResource(mConfig.reloadBtnId);
+        networkReloadBtn.setBackgroundResource(mConfig.reloadBtnId);
 
-        errorReloadBtn.setText(reloadBtnStr);
-        networkReloadBtn.setText(reloadBtnStr);
+        errorReloadBtn.setText(mConfig.reloadBtnStr);
+        networkReloadBtn.setText(mConfig.reloadBtnStr);
 
-        errorReloadBtn.setTextSize(buttonTextSize);
-        networkReloadBtn.setTextSize(buttonTextSize);
+        errorReloadBtn.setTextSize(mConfig.buttonTextSize);
+        networkReloadBtn.setTextSize(mConfig.buttonTextSize);
 
-        errorReloadBtn.setTextColor(Utils.getColor(mContext, buttonTextColor));
-        networkReloadBtn.setTextColor(Utils.getColor(mContext, buttonTextColor));
+        errorReloadBtn.setTextColor(Utils.getColor(mContext, mConfig.buttonTextColor));
+        networkReloadBtn.setTextColor(Utils.getColor(mContext, mConfig.buttonTextColor));
 
-        if (buttonHeight != -1) {
+        if (mConfig.buttonHeight != -1) {
 
-            errorReloadBtn.setHeight(Utils.dp2px(mContext, buttonHeight));
-            networkReloadBtn.setHeight(Utils.dp2px(mContext, buttonHeight));
+            errorReloadBtn.setHeight(Utils.dp2px(mContext, mConfig.buttonHeight));
+            networkReloadBtn.setHeight(Utils.dp2px(mContext, mConfig.buttonHeight));
         }
-        if (buttonWidth != -1) {
+        if (mConfig.buttonWidth != -1) {
 
-            errorReloadBtn.setWidth(Utils.dp2px(mContext, buttonWidth));
-            networkReloadBtn.setWidth(Utils.dp2px(mContext, buttonWidth));
+            errorReloadBtn.setWidth(Utils.dp2px(mContext, mConfig.buttonWidth));
+            networkReloadBtn.setWidth(Utils.dp2px(mContext, mConfig.buttonWidth));
         }
 
         this.addView(networkPage);
@@ -270,7 +256,6 @@ public class LoadingLayout extends FrameLayout {
         }
 
     }
-
 
     /**
      * 返回当前状态{Success, Empty, Error, No_Network, Loading}
@@ -535,6 +520,25 @@ public class LoadingLayout extends FrameLayout {
     }
 
     /**
+     * 设置各种状态下view的背景色，仅对当前所在的地方有效
+     *
+     * @param color
+     * @return
+     */
+    public LoadingLayout setDefineBackgroundColor(@ColorRes int color) {
+
+        if (defineLoadingPage == null) {
+            loadingPage.setBackgroundColor(Utils.getColor(mContext, color));
+        } else {
+            defineLoadingPage.setBackgroundColor(Utils.getColor(mContext, color));
+        }
+        errorPage.setBackgroundColor(Utils.getColor(mContext, color));
+        emptyPage.setBackgroundColor(Utils.getColor(mContext, color));
+        networkPage.setBackgroundColor(Utils.getColor(mContext, color));
+        return this;
+    }
+
+    /**
      * 获取当前自定义的loadingpage
      *
      * @return
@@ -543,7 +547,6 @@ public class LoadingLayout extends FrameLayout {
 
         return defineLoadingPage;
     }
-
 
     /**
      * 获取全局使用的loadingpage
@@ -579,6 +582,24 @@ public class LoadingLayout extends FrameLayout {
      * 全局配置的Class，对所有使用到的地方有效
      */
     public static class Config {
+
+        String emptyStr = "暂无数据";
+        String errorStr = "加载失败，请稍后重试···";
+        String netwrokStr = "无网络连接，请检查网络···";
+        String reloadBtnStr = "点击重试";
+        int emptyImgId = R.mipmap.empty;
+        int errorImgId = R.mipmap.error;
+        int networkImgId = R.mipmap.no_network;
+        int reloadBtnId = R.drawable.selector_btn_back_gray;
+        int tipTextSize = 14;
+        int buttonTextSize = 14;
+        int tipTextColor = R.color.base_text_color_light;
+        int buttonTextColor = R.color.base_text_color_light;
+        int buttonWidth = -1;
+        int buttonHeight = -1;
+        int loadingLayoutId = R.layout.widget_loading_page;
+        View loadingView = null;
+        int backgroundColor = R.color.base_loading_background;
 
         public Config setErrorText(@NonNull String text) {
 
@@ -677,10 +698,16 @@ public class LoadingLayout extends FrameLayout {
             return mConfig;
         }
 
-        public Config setAllPageBackgroundColor(@ColorRes int color){
+        public Config setLoadingPageView(View view){
+
+            this.loadingView  = view;
+            return mConfig;
+        }
+
+        public Config setAllPageBackgroundColor(@ColorRes int color) {
 
             backgroundColor = color;
-            return  mConfig;
+            return mConfig;
         }
     }
 }
