@@ -2,6 +2,7 @@ package com.weavey.loading.lib;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DimenRes;
 import android.support.annotation.DrawableRes;
@@ -51,6 +52,7 @@ public class LoadingLayout extends FrameLayout {
     private View contentView;
     private OnReloadListener listener;
     private boolean isFirstVisible; //是否一开始显示contentview，默认不显示
+    private int pageBackground;
     private static Config mConfig = new Config();   //配置
 
     public LoadingLayout(Context context, AttributeSet attrs) {
@@ -58,6 +60,8 @@ public class LoadingLayout extends FrameLayout {
         this.mContext = context;
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.LoadingLayout);
         isFirstVisible = a.getBoolean(R.styleable.LoadingLayout_isFirstVisible, false);
+        pageBackground = a.getColor(R.styleable.LoadingLayout_pageBackground, Utils.getColor(mContext, R.color
+                .base_loading_background));
         a.recycle();
     }
 
@@ -86,9 +90,9 @@ public class LoadingLayout extends FrameLayout {
 
     private void build() {
 
-        if(mConfig.loadingView==null){
+        if (mConfig.loadingView == null) {
             loadingPage = LayoutInflater.from(mContext).inflate(mConfig.loadingLayoutId, null);
-        }else {
+        } else {
             loadingPage = mConfig.loadingView;
         }
         errorPage = LayoutInflater.from(mContext).inflate(R.layout.widget_error_page, null);
@@ -96,10 +100,10 @@ public class LoadingLayout extends FrameLayout {
         networkPage = LayoutInflater.from(mContext).inflate(R.layout.widget_nonetwork_page, null);
         defineLoadingPage = null;
 
-        loadingPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
-        errorPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
-        emptyPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
-        networkPage.setBackgroundColor(Utils.getColor(mContext, mConfig.backgroundColor));
+        loadingPage.setBackgroundColor(pageBackground);
+        errorPage.setBackgroundColor(pageBackground);
+        emptyPage.setBackgroundColor(pageBackground);
+        networkPage.setBackgroundColor(pageBackground);
 
         errorText = Utils.findViewById(errorPage, R.id.error_text);
         emptyText = Utils.findViewById(emptyPage, R.id.empty_text);
@@ -698,9 +702,9 @@ public class LoadingLayout extends FrameLayout {
             return mConfig;
         }
 
-        public Config setLoadingPageView(View view){
+        public Config setLoadingPageView(View view) {
 
-            this.loadingView  = view;
+            this.loadingView = view;
             return mConfig;
         }
 

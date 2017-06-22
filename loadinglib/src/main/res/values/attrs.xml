@@ -4,6 +4,7 @@
     <declare-styleable name="LoadingLayout">
 
         <attr name="isFirstVisible" format="boolean"></attr>
+        <attr name="pageBackground" format="reference|color"></attr>
 
     </declare-styleable>
     

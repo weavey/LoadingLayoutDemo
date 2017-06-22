@@ -6,6 +6,7 @@
     android:id="@+id/loading"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:pageBackground="@color/colorPrimary"
     tools:context="com.weavey.loadinglayout.MainActivity">
 
     <TextView
